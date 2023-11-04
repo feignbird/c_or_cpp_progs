@@ -1,12 +1,6 @@
 #include<iostream>
+#include "utils.hpp"
 using namespace std;
-
-void printArray(int *arr, int arrSize){
-    cout << "[";
-    for(int i=0; i<arrSize; i++)
-        cout << " " << arr[i] << (i!=arrSize-1?", ":" ");
-    cout << "]" << endl;
-}
 
 int binarySearch(int *arr, int start, int end, int value){
     cout << "\nstart: " << start << endl;
@@ -57,4 +51,5 @@ int main(){
     else cout << "\nValue " << val << " found at index " << valFoundIndex << " using binary search method " << "on sorted array ";
     printArray(arr, arrSize);
     cout << endl;
+    return 0;
 }

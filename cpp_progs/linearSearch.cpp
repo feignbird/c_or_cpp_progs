@@ -1,12 +1,6 @@
 #include<iostream>
+#include "utils.hpp"
 using namespace std;
-
-void printArray(int *arr, int arrSize){
-    cout << "[";
-    for(int i=0; i<arrSize; i++)
-        cout << " " << arr[i] << (i!=arrSize-1?", ":" ");
-    cout << "]" << endl;
-}
 
 int linearSearch(int *arr, int arrSize, int value, bool fromLast=false){
     int i = fromLast?arrSize-1:0;
@@ -50,4 +44,5 @@ int main(){
     else cout << "\nValue " << val << " found at index " << valFoundIndex << " using linear search method from " << (searchStartPoint?"Last":"Start") << " in array ";
     printArray(arr, arrSize);
     cout << endl;
+    return 0;
 }

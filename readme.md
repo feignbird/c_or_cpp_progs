@@ -35,3 +35,9 @@ List of C files containing data_structures like linked_list, stack, array etc.
 1. Install 'gcc' compiler on your machine & that should be accesible using command line.
 
 2. After installing, if you have linux or mac operating system, you can directly build & execute your program like this `./runc.sh <c_source_file_path>` and if you are on windows please run `gcc -o main.exe <c_source_file_path>` then to execute the executable call `main.exe`.
+
+
+
+### Important resources:
+1. `Organizing Code Files in C and C++:` - https://www.gamedev.net/tutorials/_/technical/general-programming/organizing-code-files-in-c-and-c-r1798/
+
