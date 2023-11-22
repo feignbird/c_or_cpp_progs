@@ -40,4 +40,5 @@ List of C files containing data_structures like linked_list, stack, array etc.
 
 ### Important resources:
 1. `Organizing Code Files in C and C++:` - https://www.gamedev.net/tutorials/_/technical/general-programming/organizing-code-files-in-c-and-c-r1798/
-
+2. `Algorithms questions: ` - https://atekihcan.github.io/CLRS/01/E01.02-01/
+3. `Competitive programming: ` - https://www.geeksforgeeks.org/how-to-prepare-for-competitive-programming/
