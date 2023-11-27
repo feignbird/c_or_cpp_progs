@@ -42,3 +42,22 @@ List of C files containing data_structures like linked_list, stack, array etc.
 1. `Organizing Code Files in C and C++:` - https://www.gamedev.net/tutorials/_/technical/general-programming/organizing-code-files-in-c-and-c-r1798/
 2. `Algorithms questions: ` - https://atekihcan.github.io/CLRS/01/E01.02-01/
 3. `Competitive programming: ` - https://www.geeksforgeeks.org/how-to-prepare-for-competitive-programming/
+
+## DS lab Programs
+### section A
+Write a program in c :
+1) to implement linear search & binary search in an array.
+2) to implement operation like insertion & deletion in an array.
+3) to implement queue data structure along with its operations like enqueue, dequeue, display etc using array.
+4) to implement queue data structure along with its operations like enqueue, dequeue, display etc. using linked list.
+5) to implement linked list with creation of nodes dynamically.
+6) to implement stack data structure along with its operations using array.
+7) to implement stack data structure along with its operations using linked list.
+
+### section B
+8) to implement simple binary tree.
+9) to implement binary search tree along with its operations like insertion, deletion (0, 1 & 2 child nodes) & display
+10) to implement inorder, preorder & postorder traversal of BST.
+11) to implement heap data structure using array.
+12) to implement graph using adjacency matrix.
+13) to implement BFS and DFS using graph.
