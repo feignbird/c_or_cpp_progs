@@ -3,3 +3,4 @@ a.out
 .vscode
 test.s
 extra_progs
+backup/
