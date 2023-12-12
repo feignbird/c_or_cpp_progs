@@ -3,7 +3,7 @@
 # Check if there are at least two arguments
 
 if [ "$#" -eq 1 ]; then
-    gcc -o main.exe $1
+    gcc -o main.exe $1 -lm
     ./main.exe
     exit 0
 fi
@@ -17,7 +17,7 @@ fi
 output_name="main.exe"
 
 # Compile each source file to object files
-gcc "$@" -o "$output_name"
+gcc "$@" -o "$output_name" -lm
 
 if [ $? -ne 0 ]; then
     echo "Compilation failed for $output_name"

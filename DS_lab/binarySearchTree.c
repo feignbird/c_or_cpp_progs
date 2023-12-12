@@ -1,23 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include"binarySearchTree.h"
 
 // leftChild < parentNode
 // parentNode <= rightChild
 
-struct BinarySearchTree {
-    int key;
-    struct BinarySearchTree *leftChild;
-    struct BinarySearchTree *rightChild;
-    struct BinarySearchTree *parent;
-};
-
-typedef struct BinarySearchTree* BSTNode;
-
-
-
-// createBSTFromArr(int *arr)
-
-// getBSTNode(int value, leftnode, rightnode)
 BSTNode getBSTNode(int value, BSTNode parentnode, BSTNode leftnode, BSTNode rightnode){
     BSTNode newnode = (BSTNode)malloc(sizeof(struct BinarySearchTree));
     if (newnode == NULL){
@@ -25,27 +12,22 @@ BSTNode getBSTNode(int value, BSTNode parentnode, BSTNode leftnode, BSTNode righ
         exit(0);
     }
     newnode->key = value;
+    newnode->parent = parentnode;
     newnode->leftChild = leftnode;
     newnode->rightChild = rightnode;
-    newnode->parent = parentnode;
     return newnode;
 }
 
-
-// insert(int value)
 void insert(BSTNode *root, int value){
-    // printf("\nInserted  : %d \n", value);
     BSTNode tmpNode = *root;
     BSTNode parentTmpNode = NULL;
     while(tmpNode!=NULL){
-        // printf("\n\tvalue: %d | Updated tmpNode key  : %d\n", value, tmpNode->key);
         parentTmpNode = tmpNode;
         if (value < tmpNode->key)
             tmpNode = tmpNode->leftChild;
         else
             tmpNode = tmpNode->rightChild;
     }
-    // printf("\nparentTmpNode: %x | key: %d\n", parentTmpNode, parentTmpNode->key);
     if (value < parentTmpNode->key)
         parentTmpNode->leftChild = getBSTNode(value, parentTmpNode, NULL, NULL);
     else 
@@ -56,51 +38,6 @@ BSTNode createBSTFromArr(int *arr, int arrSize){
     BSTNode rootNode = getBSTNode(arr[0], NULL, NULL, NULL);
     for(int i=1; i<arrSize; i++) insert(&rootNode, arr[i]);
     return rootNode;
-}
-
-
-BSTNode treeSuccessor(int value){
-    BSTNode y = NULL;
-    // if ()
-}
-
-void deleteBSTNode(BSTNode *root, int value){
-    BSTNode tmpNode = *root;
-    BSTNode parentTmpNode = NULL;
-    while(tmpNode != NULL && tmpNode->key != value ){
-        parentTmpNode = tmpNode;
-        if (value < tmpNode->key) tmpNode = tmpNode->leftChild;
-        else tmpNode = tmpNode->rightChild;
-    }
-    if (tmpNode == NULL){
-        printf("\nNo key found.\n");
-    } else if (tmpNode->leftChild == NULL && tmpNode->rightChild == NULL){
-        if (tmpNode->key < parentTmpNode->key){
-            parentTmpNode->leftChild = NULL;
-            free(tmpNode);
-        } else {
-            parentTmpNode->rightChild = NULL;
-            free(tmpNode);
-        }
-    } else if ((tmpNode->leftChild != NULL && tmpNode->rightChild == NULL)){
-        if (tmpNode->key < parentTmpNode->key){
-            parentTmpNode->leftChild = tmpNode->leftChild;
-            free(tmpNode);
-        } else {
-            parentTmpNode->rightChild = tmpNode->leftChild;
-            free(tmpNode);
-        }
-    } else if (tmpNode->leftChild == NULL && tmpNode->rightChild != NULL) {
-        if (tmpNode->key < parentTmpNode->key){
-            parentTmpNode->leftChild = tmpNode->rightChild;
-            free(tmpNode);
-        } else {
-            parentTmpNode->rightChild = tmpNode->rightChild;
-            free(tmpNode);
-        }
-    } else if (tmpNode->leftChild != NULL && tmpNode->rightChild != NULL){
-
-    }
 }
 
 
@@ -141,24 +78,93 @@ void printBST(BSTNode *root, int arrSize){
     }
 }
 
-// delete 
-    // if no child
-    // if one child
-    // if two child
+BSTNode treeMinimum(BSTNode q){
+    if (q==NULL){
+        return NULL;
+    } else {
+        while(q->leftChild!=NULL)
+            q = q->leftChild;
+        return q;
+    }
+}
 
-// Display 
-    // make a display function to display at every level till you find 
-    // an array such that every element on that level hasn't become NULL.
+BSTNode treeSuccessor(BSTNode p){
+    BSTNode y = NULL;
+    if (p->rightChild != NULL)
+        return treeMinimum(p->rightChild);
+    y = p->parent;
+    while(y!=NULL && p==y->rightChild){
+        p = y;
+        y = y->parent;
+    }
+    return y;
+}
 
+BSTNode deleteBSTNode(BSTNode *root, int value){
+    BSTNode tmpNode = *root;
+    BSTNode parentTmpNode = NULL;
+    while(tmpNode != NULL && tmpNode->key != value ){
+        parentTmpNode = tmpNode;
+        if (value < tmpNode->key) tmpNode = tmpNode->leftChild;
+        else tmpNode = tmpNode->rightChild;
+    }
+    if (tmpNode == NULL){
+        printf("\nNo key found.\n");
+        return NULL;
+    }
+    BSTNode y = NULL;
+    BSTNode x = NULL;
+    if (tmpNode->leftChild == NULL || tmpNode->rightChild == NULL)
+        y = tmpNode;
+    else
+        y = treeSuccessor(tmpNode);
 
+    if(y->leftChild == NULL)
+        x = y->rightChild;
+    else 
+        x = y->leftChild;
+
+    if (x!=NULL)
+        x->parent = y->parent;
+
+    if (y->parent == NULL){
+        *root = x;
+    }
+    else {
+        if (y==(y->parent)->leftChild)
+            y->parent->leftChild = x;
+        else
+            y->parent->rightChild = x;
+    }
+
+    if (y!=tmpNode)
+        tmpNode->key = y->key;
+
+    return y;
+}
+
+/*
 int main(){
-    int arr[] = { 5, 4, 2, 1, 6, 7, 8, 9};
+    int arr[] = { 5, 4, 2, 11, 6, 7, 28, 9};
     int arrSize = sizeof(arr)/sizeof(arr[0]);
-    printf("\narr: %x\n", arr);
+    printf("\narr (address): %x\n", arr);
     printf("\narrSize: %d\n", arrSize);
     BSTNode root = createBSTFromArr(arr, arrSize);
     printf("\nroot: %x | key: %d\n", root, root->key);
     BSTNode bstArr[] = { root };
     printBST(bstArr, 1);
+
+    printf("\n\nDeleting 1");
+    deleteBSTNode(&root, 2);
+    printBST(bstArr, 1);
+    
+    printf("\n\nDeleting 7");
+    deleteBSTNode(&root, 7);
+    printBST(bstArr, 1);
+
+    printf("\n\nDeleting 11");
+    deleteBSTNode(&root, 11);
+    printBST(bstArr, 1);
     return 0;
 }
+*/
